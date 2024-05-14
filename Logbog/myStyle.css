@@ -4,8 +4,16 @@ body {
 
 /* overskrift h1 design */
 h1{
-font-style: bold;
-font-size: 60px;
+height: 40px;
+width: 95%;
+background-color: rgb(0, 0, 0);
+padding: 10px;
+text-align: left;
+text-align: middle;
+font-size:xx-large;
+border: 5px;
+color: rgb(230,230,230);
+  
 }
 
 pre{
@@ -43,4 +51,5 @@ img {
   font-size: x-large;
   
 }
+
 
