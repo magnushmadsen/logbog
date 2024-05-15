@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+<body>
+<h1>Fransk flashcards</h1>
+<img id="myImage" src="ordbog.png" style="width:auto; height: 200px">
+<p id="dansknavn"></p>
+<p id="fransknavn"></p>
+<p id="konjuktion"></p>
+<button type="button" onclick="ny()">ny</button>
+<button type="button" onclick="valgte()">svar</button>
+<button type="button" onclick="forstået()">forstået</button>
+<p id="valg"></p>
+
+</body>
+</html>
+
+<script>
+  let x;
+  let FN;
+  let listemedforstået = [];
+  let data;
+
+  var dansknavn = null
+  var fransknavn = null
+  var konjuktion = null
+
+
+function forstået(){
+  listemedforstået.push(x)
+
+}
+
+function nyt(){
+  x = Math.floor(Math.random()*8+1);
+  console.log(x);
+if (listemedforstået.includes(x)){
+ nyt();
+}
+}
+
+
+function ny() {
+  var pic;
+ nyt();
+  genererTekst(x);
+  pic = "ord"+x+".jpg"
+  document.getElementById('dansknavn').innerHTML = dansknavn;
+  document.getElementById('fransknavn').innerHTML = '';
+  document.getElementById('konjuktion').innerHTML = '';
+  document.getElementById('myImage').src = pic;
+}
+
+function valgte() {
+  var pic;
+
+  console.log(x);
+  genererTekstforsvar(x);
+  pic = "https://github.com/mpsteenstrup/GCP4/blob/master/FN_maal/FN"+x+".jpg?raw=true"  
+  document.getElementById('fransknavn').innerHTML = fransknavn;
+  document.getElementById('konjuktion').innerHTML = konjuktion;
+
+}
+
+function genererTekstforsvar(){
+  console.log(x);
+  console.log(FN);
+  for (var i = 0; i < data.length; i++) {
+      if (data[i]["ID"] == x) {
+        fransknavn = data[i]['fransknavn'];
+        konjuktion = data[i]['konjuktion'];
+ 
+        break; // exit efter loop
+      }
+    }
+
+
+
+}
+
+function genererTekst(x){
+  for (var i = 0; i < data.length; i++) {
+      if (data[i]["ID"] == x) {
+        dansknavn = data[i]['dansknavn']; 
+   
+ 
+        break; // exit efter loop
+      }
+    }
+}
+window.onload = function() {
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "FN.csv", true);
+xhr.responseType = "text";
+xhr.onload = function() {
+  data = Papa.parse(xhr.responseText, {
+    header: true // set this to true if the first row contains the header names
+  }).data;
+};
+xhr.send();
+}
+</script>
